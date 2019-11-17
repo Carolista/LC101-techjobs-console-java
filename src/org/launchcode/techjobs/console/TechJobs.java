@@ -2,6 +2,7 @@ package org.launchcode.techjobs.console;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 
 /**
@@ -51,7 +52,7 @@ public class TechJobs {
                     }
                 }
 
-            } else { // choice is "search"
+            } else { // if choice is "search"
 
                 // How does the user want to search (e.g. by skill or employer)
                 String searchField = getUserSelection("Search by:", columnChoices);
@@ -61,7 +62,7 @@ public class TechJobs {
                 String searchTerm = in.nextLine();
 
                 if (searchField.equals("all")) {
-                    System.out.println("Search all fields not yet implemented.");
+                    printJobs(JobData.findByValue(searchTerm));
                 } else {
                     printJobs(JobData.findByColumnAndValue(searchField, searchTerm));
                 }
@@ -80,7 +81,7 @@ public class TechJobs {
         // associate an integer with each one
         Integer i = 0;
         for (String choiceKey : choices.keySet()) {
-            choiceKeys[i] = choiceKey;
+            choiceKeys[i] = choiceKey; // assign each choice to array
             i++;
         }
 
@@ -91,10 +92,10 @@ public class TechJobs {
             // Print available choices
             for (Integer j = 0; j < choiceKeys.length; j++) {
                 System.out.println("" + j + " - " + choices.get(choiceKeys[j]));
-            }
+            } // Q: what is purpose of "" at front of concatenated string?
 
             choiceIdx = in.nextInt();
-            in.nextLine();
+            in.nextLine(); // Q: why is this here and what is it used for?
 
             // Validate user's input
             if (choiceIdx < 0 || choiceIdx >= choiceKeys.length) {
@@ -111,6 +112,17 @@ public class TechJobs {
     // Print a list of jobs
     private static void printJobs(ArrayList<HashMap<String, String>> someJobs) {
 
-        System.out.println("printJobs is not implemented yet");
+        if (someJobs.size() < 1) {
+            System.out.println("\nNo results. " +
+                    "\nUse List option to view all available search terms in each category.\n");
+        } else {
+            for (HashMap<String, String> job : someJobs) {
+                System.out.println("\n*****");
+                for (Map.Entry<String, String> info : job.entrySet()) {
+                    System.out.println(info.getKey() + ": " + info.getValue());
+                }
+                System.out.println("*****");
+            }
+        }
     }
 }
