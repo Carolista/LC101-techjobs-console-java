@@ -51,10 +51,10 @@ public class JobData {
         // load data, if not already loaded
         loadData();
 
-        ArrayList allJobsCopy = new ArrayList();
-        allJobsCopy = (ArrayList)allJobs.clone();
+        ArrayList allJobsCopy = (ArrayList)allJobs.clone();
 
         return allJobsCopy;
+
     }
 
     /**
